@@ -21,6 +21,8 @@ class VehiculoController extends Controller
             'modelo' => 'required|string|max:50',
             'anio' => 'required|integer',
             'placa' => 'required|string|max:20|unique:vehiculos,placa',
+            'color' => 'nullable|string|max:30',
+            'tipo' => 'nullable|string|max:30',
         ]);
 
         $vehiculo = Vehiculo::create($data);
@@ -49,6 +51,8 @@ class VehiculoController extends Controller
             'modelo' => 'sometimes|string|max:50',
             'anio' => 'sometimes|integer',
             'placa' => 'sometimes|string|max:20|unique:vehiculos,placa,' . $id,
+            'color' => 'sometimes|string|max:30',
+            'tipo' => 'sometimes|string|max:30',
         ]);
 
         $vehiculo->update($data);

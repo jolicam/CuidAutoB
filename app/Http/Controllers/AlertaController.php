@@ -17,8 +17,10 @@ class AlertaController extends Controller
     {
         $data = $request->validate([
             'vehiculo_id' => 'required|exists:vehiculos,id',
-            'mensaje' => 'required|string|max:255',
+            'tipo_alerta' => 'required|string|max:50',
+            'descripcion' => 'required|string|max:255',
             'fecha_alerta' => 'required|date',
+            'estado' => 'nullable|string|max:20',
         ]);
 
         $alerta = Alerta::create($data);
@@ -43,8 +45,10 @@ class AlertaController extends Controller
 
         $data = $request->validate([
             'vehiculo_id' => 'sometimes|exists:vehiculos,id',
-            'mensaje' => 'sometimes|string|max:255',
+            'tipo_alerta' => 'sometimes|string|max:50',
+            'descripcion' => 'sometimes|string|max:255',
             'fecha_alerta' => 'sometimes|date',
+            'estado' => 'sometimes|string|max:20',
         ]);
 
         $alerta->update($data);
@@ -61,4 +65,3 @@ class AlertaController extends Controller
         return response()->json(['message' => 'Alerta eliminada']);
     }
 }
-

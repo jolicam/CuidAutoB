@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Usuario extends Authenticatable
 {
@@ -16,16 +16,16 @@ class Usuario extends Authenticatable
     protected $fillable = [
         'nombre',
         'email',
-        'contrasena',
+        'password',
+        // otros campos si tienes
     ];
 
     protected $hidden = [
-        'contrasena',
+        'password',
         'remember_token',
     ];
 
-    public function getAuthPassword()
-    {
-        return $this->contrasena;
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }

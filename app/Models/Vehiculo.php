@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Usuario; // ✅ Importar el modelo relacionado
+use App\Models\Usuario;
+use App\Models\Alerta;
 
 class Vehiculo extends Model
 {
@@ -21,19 +22,11 @@ class Vehiculo extends Model
         'usuario_id',
     ];
 
-    // Relación con Usuario
     public function usuario()
     {
         return $this->belongsTo(Usuario::class, 'usuario_id');
     }
 
-    // Relación con Servicios
-    public function servicios()
-    {
-        return $this->hasMany(Servicio::class, 'vehiculo_id');
-    }
-
-    // Relación con Alertas
     public function alertas()
     {
         return $this->hasMany(Alerta::class, 'vehiculo_id');

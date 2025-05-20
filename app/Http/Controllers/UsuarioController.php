@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
-    // Listar todos los usuarios
     public function index()
     {
-        return response()->json(User::all(), 200);
+        return response()->json(Usuario::all(), 200);
     }
 
-    // Ver un usuario específico
     public function show($id)
     {
-        $usuario = User::find($id);
+        $usuario = Usuario::find($id);
 
         if (!$usuario) {
             return response()->json(['mensaje' => 'Usuario no encontrado'], 404);
@@ -27,33 +25,31 @@ class UsuarioController extends Controller
         return response()->json($usuario, 200);
     }
 
-    // Actualizar datos del usuario
     public function update(Request $request, $id)
     {
-        $usuario = User::find($id);
+        $usuario = Usuario::find($id);
 
         if (!$usuario) {
             return response()->json(['mensaje' => 'Usuario no encontrado'], 404);
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'string|max:255',
-            'email' => 'email|unique:users,email,' . $usuario->id,
+            'nombre' => 'string|max:255',
+            'email' => 'email|unique:usuarios,email,' . $usuario->id,
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errores' => $validator->errors()], 422);
         }
 
-        $usuario->update($request->only(['name', 'email']));
+        $usuario->update($request->only(['nombre', 'email']));
 
         return response()->json(['mensaje' => 'Usuario actualizado correctamente'], 200);
     }
 
-    // Eliminar usuario
     public function destroy($id)
     {
-        $usuario = User::find($id);
+        $usuario = Usuario::find($id);
 
         if (!$usuario) {
             return response()->json(['mensaje' => 'Usuario no encontrado'], 404);
@@ -64,10 +60,9 @@ class UsuarioController extends Controller
         return response()->json(['mensaje' => 'Usuario eliminado correctamente'], 200);
     }
 
-    // Cambiar contraseña
     public function cambiarContrasena(Request $request, $id)
     {
-        $usuario = User::find($id);
+        $usuario = Usuario::find($id);
 
         if (!$usuario) {
             return response()->json(['mensaje' => 'Usuario no encontrado'], 404);
